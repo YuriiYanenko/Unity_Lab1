@@ -4,6 +4,8 @@ namespace Player
 {
     public class PlayerMovement : MonoBehaviour
     {
+        public AudioSource jumpSound;
+
         Rigidbody player;
         float speed;
 
@@ -29,6 +31,7 @@ namespace Player
         {
             float jumpForce = 10f; // Встановіть потрібну силу стрибка
             player.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            jumpSound.Play();
         }
 
         public void PlayerStop()
