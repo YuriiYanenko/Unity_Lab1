@@ -7,40 +7,26 @@ public class MoveBall : MonoBehaviour
 {
     [Range(1f, 5f)]
     public float speed;
-    PlayerMovement player;
+    
+    Rigidbody player;
 
     public AudioSource jumpSound;
     // Start is called before the first frame update
     void Start()
     {
-        Rigidbody rb = GetComponent<Rigidbody>();
-        player = new PlayerMovement(rb);
-        player.Speed = speed;
+        player = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical);
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            direction = new Vector3(horizontal, 0f, vertical);
-            player.PlayerMove(direction);
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            direction = new Vector3(horizontal, 0f, -vertical);
-            player.PlayerMove(direction);
-        }
-        else player.PlayerStop();
+        player.velocity = new Vector3(horizontal * speed, player.velocity.y, player.velocity.z);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            player.jumpSound = jumpSound;
-            player.PlayerJump(); 
+            player.velocity = new Vector3(player.velocity.x, 5, player.velocity.z);
         }
     }
 
